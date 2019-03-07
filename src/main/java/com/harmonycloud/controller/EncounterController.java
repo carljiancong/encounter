@@ -19,15 +19,15 @@ public class EncounterController {
 
     @RequestMapping(path = "/encounter", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public Result save(@RequestBody Encounter encounter) throws Exception {
+
         return encounterService.save(encounter);
     }
 
     @ApiOperation(value = "get encounter by appointment id", httpMethod = "GET")
     @ApiImplicitParam(name = "appointmentId", value = "appointmentId", paramType = "query", dataType = "Integer")
-    @GetMapping("/encounterEntity")
+    @GetMapping("/getEncounter")
     public Result getEncounterList(@RequestParam("appointmentId") Integer appointmentId) {
         return encounterService.getEncounterList(appointmentId);
     }
-
 
 }

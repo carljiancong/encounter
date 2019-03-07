@@ -4,17 +4,11 @@ import com.harmonycloud.entity.Encounter;
 import com.harmonycloud.repository.EncounterRepository;
 import com.harmonycloud.result.CodeMsg;
 import com.harmonycloud.result.Result;
-import java.util.List;
 import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.TimeoutException;
 
 
 @Service
