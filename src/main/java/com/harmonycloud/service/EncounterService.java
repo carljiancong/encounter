@@ -4,6 +4,7 @@ import com.harmonycloud.entity.Encounter;
 import com.harmonycloud.repository.EncounterRepository;
 import com.harmonycloud.result.CodeMsg;
 import com.harmonycloud.result.Result;
+import java.util.List;
 import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,4 +46,14 @@ public class EncounterService {
         }
     }
 
+    public Result getEncounterList(Integer appointmentId) {
+        Encounter encounter = null;
+        try {
+            encounter = encounterRepository.findByAppointmentId(appointmentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.buildError(CodeMsg.QUERY_FAIL);
+        }
+        return Result.buildSuccess(encounter);
+    }
 }

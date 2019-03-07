@@ -13,6 +13,7 @@ public class CodeMsg {
 
     public static CodeMsg SERVICE_ERROR = new CodeMsg("Service error");
     public static CodeMsg URI = new CodeMsg("URI excepstion");
+    public static CodeMsg QUERY_FAIL = new CodeMsg("query fail");
 
     public String getMsg() {
         return msg;
