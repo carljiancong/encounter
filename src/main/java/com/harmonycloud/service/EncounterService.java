@@ -1,14 +1,11 @@
 package com.harmonycloud.service;
 
 import com.harmonycloud.entity.Encounter;
+import com.harmonycloud.enums.ErrorMsgEnum;
+import com.harmonycloud.exception.EncounterException;
 import com.harmonycloud.repository.EncounterRepository;
-import com.harmonycloud.result.CodeMsg;
-import com.harmonycloud.result.Result;
-import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 
 
 @Service
@@ -17,37 +14,19 @@ public class EncounterService {
     @Autowired
     private EncounterRepository encounterRepository;
 
-    @Transactional(rollbackFor = Exception.class)
-    @Compensable(compensationMethod = "saveEncounterCancel", timeout = 10)
-    public Result save(Encounter encounter) throws Exception {
-        try {
-            encounterRepository.save(encounter);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("save error");
-        }
-        return Result.buildSuccess(encounter);
-    }
 
-
-    public void saveEncounterCancel(Encounter encounter) {
-        Encounter encounter1 = null;
-        try {
-            encounter1 = encounterRepository.findByAppointmentId(encounter.getAppinmentId());
-            encounterRepository.delete(encounter1);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void save(Encounter encounter) throws Exception {
+        if (encounterRepository.save(encounter).getEncounterId() == null) {
+            throw new EncounterException(ErrorMsgEnum.SAVE_ERROR.getMessage());
         }
     }
 
-    public Result getEncounterList(Integer appointmentId) {
-        Encounter encounter = null;
-        try {
-            encounter = encounterRepository.findByAppointmentId(appointmentId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Result.buildError(CodeMsg.QUERY_FAIL);
-        }
-        return Result.buildSuccess(encounter);
+    public void saveEncounterCancel(Encounter encounter) throws Exception{
+        encounterRepository.delete(encounterRepository.findByAppointmentId(encounter.getAppinmentId()));
+    }
+
+
+    public Encounter getEncounter(Integer appointmentId) throws Exception {
+        return encounterRepository.findByAppointmentId(appointmentId);
     }
 }

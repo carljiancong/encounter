@@ -10,16 +10,22 @@ public class Encounter {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer encounterId;
+
     @Column(name = "patient_id")
     private Integer patientId;
+
     @Column(name = "encounter_type_id")
     private Integer encounterTypeId;
+
     @Column(name = "clinic_id")
     private Integer clinicId;
+
     @Column(name = "room_id")
     private Integer roomId;
+
     @Column(name = "date_time")
     private Date dateTime;
+
     @Column(name = "appointment_id")
     private Integer appointmentId;
 
