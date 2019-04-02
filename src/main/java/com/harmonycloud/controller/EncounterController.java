@@ -49,7 +49,6 @@ public class EncounterController {
         String msg = LogUtil.getRequest(request) + ", information='";
 
         encounterService.save(encounter);
-        Thread.sleep(7000);
         logger.info(msg + "Save encounter success");
         return new CimsResponseWrapper<>(true, null, "Save encounter success");
     }
@@ -60,7 +59,7 @@ public class EncounterController {
      * @param encounter model
      */
     @PostMapping(path = "/saveCancel", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveEncounterCancel(@RequestBody  Encounter encounter) throws Exception {
+    public void saveEncounterCancel(@RequestBody Encounter encounter) throws Exception {
         encounterService.saveEncounterCancel(encounter);
     }
 
