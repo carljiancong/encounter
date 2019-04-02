@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@Api(tags = "Encounter")
 public class EncounterController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -35,13 +34,14 @@ public class EncounterController {
      * save encounter when attend
      *
      * @param encounter encounter
-     * @return
+     * @return CimsResponseWrapper
      * @throws Exception
      */
-    @RequestMapping(path = "/encounter", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @PostMapping(path = "/encounter", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional(rollbackFor = Throwable.class)
     @Compensable(compensationMethod = "saveEncounterCancel", timeout = 10)
     public CimsResponseWrapper<String> save(@RequestBody Encounter encounter) throws Exception {
+
         if (encounter == null || encounter.getAppinmentId() == null || encounter.getAppinmentId() <= 0) {
             throw new EncounterException(ErrorMsgEnum.PARAMETER_ERROR.getMessage());
         }
@@ -55,11 +55,11 @@ public class EncounterController {
     /**
      * saga: save encounter cancel
      *
-     * @param encounter
+     * @param encounter model
      */
+    @PostMapping(path = "/encounter")
     public void saveEncounterCancel(Encounter encounter) throws Exception {
         encounterService.saveEncounterCancel(encounter);
-
     }
 
     /**
