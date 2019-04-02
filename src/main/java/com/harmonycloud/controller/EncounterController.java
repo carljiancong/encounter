@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@Api(tags = "Encounter")
 public class EncounterController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -58,7 +59,9 @@ public class EncounterController {
      *
      * @param encounter model
      */
-    @PostMapping(path = "/encounter")
+    @PostMapping(path = "/saveEncounterCancel")
+    @ApiOperation(value = "save encounter cancel", httpMethod = "POST")
+    @ApiImplicitParam(name = "encounter", value = "encounter", paramType = "body", dataType = "Encounter")
     public void saveEncounterCancel(Encounter encounter) throws Exception {
         encounterService.saveEncounterCancel(encounter);
     }
