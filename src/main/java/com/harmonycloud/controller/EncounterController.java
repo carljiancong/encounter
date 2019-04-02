@@ -48,6 +48,7 @@ public class EncounterController {
         String msg = LogUtil.getRequest(request) + ", information='";
 
         encounterService.save(encounter);
+        Thread.sleep(7000);
         logger.info(msg + "Save encounter success");
         return new CimsResponseWrapper<>(true, null, "Save encounter success");
     }
