@@ -59,8 +59,11 @@ public class EncounterController {
      * @param encounter model
      */
     @PostMapping(path = "/saveCancel", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveEncounterCancel(@RequestBody Encounter encounter) throws Exception {
+    public CimsResponseWrapper<String> saveEncounterCancel(@RequestBody Encounter encounter) throws Exception {
         encounterService.saveEncounterCancel(encounter);
+
+        return new CimsResponseWrapper<>(true, null, "Save encounter rollback success");
+
     }
 
     /**
