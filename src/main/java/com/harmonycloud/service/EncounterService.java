@@ -21,8 +21,13 @@ public class EncounterService {
         }
     }
 
-    public void saveEncounterCancel(Encounter encounter) throws Exception{
-        encounterRepository.delete(encounterRepository.findByAppointmentId(encounter.getAppinmentId()));
+    public Encounter saveEncounterCancel(Encounter encounter) throws Exception {
+        Encounter oldEncounter = encounterRepository.findByAppointmentId(encounter.getAppinmentId());
+        if (oldEncounter == null) {
+            return null;
+        }
+        encounterRepository.delete(oldEncounter);
+        return oldEncounter;
     }
 
 
