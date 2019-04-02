@@ -59,10 +59,8 @@ public class EncounterController {
      *
      * @param encounter model
      */
-    @PostMapping(path = "/saveEncounterCancel")
-    @ApiOperation(value = "save encounter cancel", httpMethod = "POST")
-    @ApiImplicitParam(name = "encounter", value = "encounter", paramType = "body", dataType = "Encounter")
-    public void saveEncounterCancel(Encounter encounter) throws Exception {
+    @PostMapping(path = "/saveCancel", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void saveEncounterCancel(@RequestBody  Encounter encounter) throws Exception {
         encounterService.saveEncounterCancel(encounter);
     }
 
